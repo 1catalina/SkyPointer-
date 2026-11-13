@@ -11,4 +11,4 @@ object StarCatalog {
         CelestialObject("Deneb", AstroMath.raHmsToDeg(20, 41, 25.9), 45.2803, 1.25),
         CelestialObject("Polaris", AstroMath.raHmsToDeg(2, 31, 49.1), 89.2642, 1.98)
     )
-}
+}git add .
