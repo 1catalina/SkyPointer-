@@ -4,7 +4,11 @@ data class CelestialObject(
     val name: String,
     val raDeg: Double,
     val decDeg: Double,
-    val magnitude: Double
+    val magnitude: Double,
+    val colorIndex: Double? = null,
+    val spectralType: String? = null,
+    val constellation: String? = null,
+    val catalogId: Int? = null
 ) {
     init {
         require(raDeg >= 0.0 && raDeg < 360.0) { "RA must be in [0, 360), got $raDeg for $name" }

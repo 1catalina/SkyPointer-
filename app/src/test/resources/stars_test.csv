@@ -1,0 +1,6 @@
+id,name,ra_hours,dec_deg,mag,bv,spect,con
+1,Sirius,6.75247,-16.71611,-1.44,0.009,A0m,CMa
+2,Vega,18.61565,38.78369,0.03,0.0,A0Vvar,Lyr
+3,Polaris,2.53030,89.26411,2.02,0.6,F7Ib,UMi
+4,,10.0,20.0,6.1,,,Leo
+5,Edge,24.0,0.0,5.0,,,Psc

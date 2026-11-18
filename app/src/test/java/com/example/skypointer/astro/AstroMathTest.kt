@@ -84,35 +84,28 @@ class AstroMathTest {
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.raHmsToDeg(24, 0, 0.0)
         }
-
         /// m<0
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.raHmsToDeg(1, -1, 0.0)
         }
-
         /// m=60
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.raHmsToDeg(1, 60, 0.0)
         }
-
         /// s<0
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.raHmsToDeg(1, 0, -1.0)
         }
-
         /// s= 60
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.raHmsToDeg(1, 0, 60.0)
         }
-
         /// s = Nan
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.raHmsToDeg(1, 0, Double.NaN)
         }
-
         /// hms zero
         assertEquals(0.0, AstroMath.raHmsToDeg(0, 0, 0.0), 1e-9)
-
         /// in interval
         assertEquals(307.625, AstroMath.raHmsToDeg(20, 30, 30.0), 1e-9)
     }
@@ -122,7 +115,6 @@ class AstroMathTest {
     fun computesJulianDateTest() {
         /// J=2000
         assertEquals(2_451_545.0, AstroMath.julianDate(Instant.parse("2000-01-01T12:00:00Z")), 1e-9)
-
         /// unix epoch
         assertEquals(2_440_587.5, AstroMath.julianDate(Instant.parse("1970-01-01T00:00:00Z")), 1e-9)
 
@@ -135,18 +127,14 @@ class AstroMathTest {
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.gmstDeg(Double.NaN)
         }
-
         /// below range
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.gmstDeg(2_415_020.0)
         }
-
         /// at range start
         assertEquals(100.18338831141591, AstroMath.gmstDeg(2_415_020.5), 1e-6)
-
         /// in range
         assertEquals(280.46061837, AstroMath.gmstDeg(j2000), 1e-9)
-
         /// at range end
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.gmstDeg(2_488_069.5)
@@ -166,12 +154,10 @@ class AstroMathTest {
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.lstDeg(j2000, -181.0)
         }
-
         /// above range
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.lstDeg(j2000, 181.0)
         }
-
         /// in range
         assertEquals(20.46061837, AstroMath.lstDeg(j2000, 100.0), 1e-9)
 
@@ -199,8 +185,6 @@ class AstroMathTest {
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.raDecToAzAlt(-1.0, 0.0, 45.0, 25.0, time)
         }
-
-        ///Ra
     }
     @Test
     fun computesAzAltForRaThreeHundredSixty() {
@@ -220,7 +204,6 @@ class AstroMathTest {
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.raDecToAzAlt(0.0, -91.0, 45.0, 25.0, time)
         }
-
         /// dec above range
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.raDecToAzAlt(0.0, 91.0, 45.0, 25.0, time)
@@ -235,12 +218,10 @@ class AstroMathTest {
     }
     @Test
     fun computesAzAltForLatBelowRange() {
-
         /// Lat below range
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.raDecToAzAlt(0.0, 0.0, -91.0, 25.0, time)
         }
-
         /// Lat above range
         assertThrows(IllegalArgumentException::class.java) {
             AstroMath.raDecToAzAlt(0.0, 0.0, 91.0, 25.0, time)
@@ -251,7 +232,6 @@ class AstroMathTest {
     fun computesAzAltForDecAtLimits() {
         // at Dec = 90 altitude equals latitude
         assertEquals(45.0, AstroMath.raDecToAzAlt(0.0, 90.0, 45.0, 25.0, time).altitudeDeg, 1e-9)
-
         /// S limit
         assertEquals(-45.0, AstroMath.raDecToAzAlt(0.0, -90.0, 45.0, 25.0, time).altitudeDeg, 1e-9)
     }
@@ -260,7 +240,6 @@ class AstroMathTest {
     fun computesAzAltForLatAtNorthLimit() {
         // at lat = 90 altitude equals declination
         assertEquals(30.0, AstroMath.raDecToAzAlt(0.0, 30.0, 90.0, 25.0, time).altitudeDeg, 1e-9)
-
         /// S limit
         assertEquals(-30.0, AstroMath.raDecToAzAlt(0.0, 30.0, -90.0, 25.0, time).altitudeDeg, 1e-9)
 
@@ -280,14 +259,49 @@ class AstroMathTest {
         assertEquals(180.0, result.azimuthDeg, 1e-9)
     }
 
-//    @Test
-//    fun computesAzAltForStarAgainstStellarium() {
-//        val time = Instant.parse("2026-11-13T18:00:00Z") // UTC time
-//        val result = AstroMath.raDecToAzAlt(
-//            AstroMath.raHmsToDeg(18, 36, 56.0), 38.78, // RA/Dec (J2000) from Stellarium
-//            45.0, 25.0, time                          // latitude, longitude
-//        )
-//        assertEquals(180.0, result.azimuthDeg, 0.5)   // Az from Stellarium
-//        assertEquals(40.0, result.altitudeDeg, 0.5)   // Alt from Stellarium
-//    }
+    @Test
+    fun gmstAtJ2000() {
+        // JD 2451545.0 = 2000-01-01 12:00 UTC
+        assertEquals(280.46061837, AstroMath.gmstDeg(2_451_545.0), 1e-6)
+    }
+
+    @Test
+    fun starOnMeridianIsDueSouthAtExpectedAltitude() {
+        val utc = Instant.parse("2026-11-19T20:00:00Z")
+        val lat = 45.0
+        val lon = 21.0
+        val lst = AstroMath.lstDeg(AstroMath.julianDate(utc), lon)
+
+        // RA = LST inseamna ca steaua e exact pe meridian (HA = 0)
+        val r = AstroMath.raDecToAzAlt(lst, 20.0, lat, lon, utc)
+
+        assertEquals(180.0, r.azimuthDeg, 1e-6)
+        assertEquals(90.0 - lat + 20.0, r.altitudeDeg, 1e-6)   // = 65
+    }
+
+    @Test
+    fun starAtZenithWhenDecEqualsLatitudeOnMeridian() {
+        val utc = Instant.parse("2026-11-19T20:00:00Z")
+        val lst = AstroMath.lstDeg(AstroMath.julianDate(utc), 21.0)
+        val r = AstroMath.raDecToAzAlt(lst, 45.0, 45.0, 21.0, utc)
+        assertEquals(90.0, r.altitudeDeg, 1e-6)
+    }
+
+    @Test
+    fun celestialPoleAltitudeEqualsLatitude() {
+        // Polaris-ul ideal (Dec = 90) are altitudinea = latitudinea, la orice ora
+        val r = AstroMath.raDecToAzAlt(0.0, 90.0, 45.75, 21.23, Instant.parse("2026-11-19T03:00:00Z"))
+        assertEquals(45.75, r.altitudeDeg, 1e-6)
+    }
+
+    @Test
+    fun starSixHoursEastOfMeridianIsInTheEast() {
+        val utc = Instant.parse("2026-11-19T20:00:00Z")
+        val lst = AstroMath.lstDeg(AstroMath.julianDate(utc), 21.0)
+        // RA mai mare cu 90 grade = steaua inca nu a ajuns la meridian, e spre Est
+        val ra = AstroMath.normalizeDegree(lst + 90.0)
+        val r = AstroMath.raDecToAzAlt(ra, 0.0, 45.0, 21.0, utc)
+        assertEquals(90.0, r.azimuthDeg, 1e-6)
+    }
+
 }

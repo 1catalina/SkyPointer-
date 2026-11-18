@@ -1,6 +1,5 @@
 package com.example.skypointer.astro
 
-import androidx.compose.ui.graphics.colorspace.Illuminant
 import java.time.Instant
 import kotlin.math.asin
 import kotlin.math.atan2
@@ -18,8 +17,8 @@ object AstroMath {
         return if (r < 0) r + 360.0 else r
     }
 
-    // Converts RA in degrees
-    // 24hrs = 360 degrees  ->  HA = hours * 15
+    // Converts RA from hours to degrees
+    // 24hrs = 360 degrees  ->  RA = hours * 15  !!!
     fun hoursToDeg(h: Double): Double {
         require(h.isFinite()) { "Hour must be a finite number, got $h" }
         require(h >= 0.0 && h < 24.0) { "RA hours must be in [0, 24), got $h" }
@@ -49,7 +48,7 @@ object AstroMath {
     }
 
 
-    // Converts Equatorial Degrees (RA/Dec) to Local Degrees
+    // Converts Equatorial degrees (RA/Dec) to local degrees
     fun raDecToAzAlt(
         raDeg: Double,
         decDeg: Double,
